@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head2') %>
+    <style>
+      body {
+           background-color: #FFDEB8;
+       }
+
+       #container {
+          position: absolute;
+          top: 100px;
+          left: 10px;
+        }
+
+        #ttitle {
+          position: relative;
+          left: 530px;
+        }
+
+        #edit_bt {
+          position: relative;
+          top: 20px;
+          left: 400px;
+       }
+
+       #purchase_bt {
+         position: relative;
+         top: 30px;
+         left: 400px;
+       }
+
+       #before_bt {
+         position: absolute;
+         top: 280px;
+         left: 580px;
+       }
+
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/sim2_nav') %>
+    <div id="container" class="container mb-3">
+      <h3 id="ttitle" style="font: HYGothic-Extra; font-weight: bold; color: #787878; font-size: 30px;" class="contentBoxTop mb-3">신고하기</h3>
+      <div id="edit_bt">
+          <a class="btn btn-primary" href="/users/<%= user.username %>/report1" style="text-align: left; background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box; border: 3px solid var(--unnamed-color-707070); background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+              매뉴얼 확인<br>
+              경찰청 페이지에 접속하여 신고 절차를 진행하세요.
+            </a>
+          </a>
+      </div>
+      <div id="purchase_bt">
+          <a class="btn btn-primary" href="#" style="text-align: left; background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box; border: 3px solid var(--unnamed-color-707070); background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            경찰 인증<br>
+            경찰 인증을 통해 신원 정보를 조회하세요.
+          </a>
+      </div>
+      <div class="form-group">
+        <% if(isAuthenticated){ %>
+          <a id="before_bt" href="/users/<%= currentUser.username %>" class="btn btn-primary" style="color: #000000; background: #F6C488; border: 3px solid #787878;">이전</a>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

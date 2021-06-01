@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <%- include('../partials/head') %>
+    <!--<meta charset=”UTF-8”>
+    <script type=”text/javascript” src=”web3.min.js”></script>
+    <script type = "text/javascripy"></script>
+    <script src="web3.js" charset="utf-8"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script type="text/javascript" src="http://jsgetip.appspot.com"></script>
+    <script src="/js/script2.js"></script>
+    
+
+    <style>
+    body {
+         background-color: #FFDEB8;
+     }
+
+     #container {
+       position: absolute;
+        top: 100px;
+        left: 300px;
+      }
+
+      #next_bt {
+        position: absolute;
+         top: 430px;
+         left: 280px;
+      }
+      #check_bt{
+        position: absolute;
+        top: 320px;
+        left:280px;
+      }
+      div.ma{
+        margin : 5px 0px 5px 0px;
+      }
+    </style>
+    </head>
+    <body>
+    <%- include('../partials/nav') %>
+    <div id="container" class="container mb-3">
+        <h3 id="title" style="text-align: left; font: HYGothic-Extra; font-weight: bold; color: #787878; font-size: 30px;" class="contentBoxTop mb-3">신원인증<br><br></h3>
+      
+       <button onclick="add_ip()" style="color: #000000; background: #F6C488; border: 3px solid #787878; position: absolute; top: 100px; left: 280px;">
+        ip 주소 추가하기
+         </button>
+        <!-- <button onclick="add_ip()" style="color: #000000; background: #F6C488; border: 3px solid #787878; position: absolute; top: 205px; left: 280px;">ip 주소 추가하기</button>-->
+
+        <form action="/users" method="post">
+            <div id="new_form1">
+            <div class="form-group row">
+              <label for="residentnum, residentnum2" class="col-sm-3 col-form-label">주민번호</label></div>
+              <div class="col-sm-9">
+                <input type="text" inputmode = "numeric" id="residentnum" style="width: 170px;" maxlength="6" placeholder="주민번호 앞자리" name="residentnum" value="<%= user.residentnum %>" class="form-control <%= (errors.residentnum)?'is-invalid':'' %>" />-<input type="text" inputemode = "numeric" id="residentnum2" style="width: 170px;" maxlength="7" name="residentnum2" value="<%= user.residentnum2 %>" class="form-control <%= (errors.residentnum2)?'is-invalid':'' %>">
+                <% if(errors.residentnum){ %>
+                  <span class="invalid-feedback"><%= errors.residentnum.message %></span>
+                <% } %>
+              
+            </div>
+          </div>
+
+          
+         <!-- <div class="form-group">
+            <button id="check_bt" onclick="check_identify()" style="color: #000000; background: #F6C488; border: 3px solid #787878;">신원인증</button>
+          </div>-->
+
+        </form>
+       
+        </div>
+
+</body>
+</html>

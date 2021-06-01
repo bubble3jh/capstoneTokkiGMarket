@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  
+
+  <head>
+    <%- include('../partials/head') %>
+
+    <style>
+    body {
+         background-color: #FFDEB8;
+     }
+
+     #main_header > #image_rabbit {
+       position: absolute;
+       left: 260px;
+       top: 85px;
+     }
+
+     #main_header > #title {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 410px;
+       top: 230px;
+     }
+
+     #main_header > #image_carrot {
+       position: absolute;
+       left: 660px;
+       top: 140px;
+     }
+
+     #main_header > #title2 {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 800px;
+       top: 230px;
+     }
+
+     #main_header > #search {
+       width: 350px;
+       position: absolute;
+       left: 530px;
+       top: 455px;
+     }
+
+     #main_header > #search_button {
+       position: absolute;
+       left: 832px;
+       top: 457px;
+     }
+
+     select {
+         font-family: 'Nanum Gothic Coding', monospace;
+         border: none;
+         outline: #C2C2C2;
+         width: 150px;
+         height: 50px;
+         font-size: 30px;
+         background: #FFEEDB;
+         color: #9E9E9E;
+         text-align: center;
+         position: absolute;
+         left: 350px;
+         top: 450px;
+     }
+
+   </style>
+ </head>
+ <body>
+   <header id="main_header">
+    <%- include('../partials/sim_nav') %>
+    
+    <script>
+     function enter(){
+
+          // 엔터키의 코드는 13입니다.
+          if(event.keyCode == 13){
+            searchsCheck();
+          return;
+          }
+          }
+
+      
+      function searchsCheck() {
+      
+         var searchs = document.f1.searchs.value;
+         
+         if(searchs.length > 2){
+        
+         location.href="posts?searchText="+searchs+"&limit=10&searchType=title%2Cbody";
+      
+         }
+         else{
+          alert("3가지 이상 단어를 쓰세요!");
+         }
+         
+      }
+      </script>
+        <div id="title">
+            <h1 style="font-size: 70px;">토끼지마</h1>
+        </div>
+        <div id="image_carrot">
+            <img src="/image/carrot.png" width="150" alt="carrot">
+        </div>
+        <div id="image_rabbit">
+            <img src="/image/rabbit.png" width="180" alt="rabbit">
+        </div>
+        <div id="title2">
+            <h1 style="font-size: 70px;">켓</h1>
+        </div>
+
+
+
+        <!-- 그냥 submit했을때 search로 input이 되니까 일단 막아버리고, 
+        text에서 enter키를 눌렀을때 함수실행되게 enter()함수랑 searchCheck만듦. -->
+        <form action="" name="f1"onsubmit="return false;"> 
+        <div id=""style="position: relative;transform: translate(26.5%,710%);">
+            <input onkeyPress="enter();"name="searchs" type="text" minLength="3"style="width:35%;font-size: 30px; text-align: center;border: 3px solid #C2C2C2; background: #FFEEDB;"   placeholder="상품을 검색하세요." />
+        </div>
+        <div id=""style="position: relative;transform: translate(61.5%,633%);">
+          <button type="button" OnClick="searchsCheck()"><img src="/image/search.png" width="73%"></button>
+        </div>
+
+        </form>
+    </header>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!-- 내가 작성한 게시판 -->
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset = "UTF-8">
+      <title>Document</title>
+      <!-- font 설정 -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+      <!-- bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> 
+      <style>
+        body{
+          text-decoration: none;
+          list-style: none;
+          background-color:#FFDEB8;
+        }
+        .navbar{
+          background-color:#FFDEB8;
+          font-family: 'Nanum Gothic', sans-serif;
+        }
+        .navbar-brand > #h1{
+          color: #717171;
+          font-weight: 800;
+        }
+        .navbar-brand > #h1{
+          top:0px;
+        }
+        .navbar-brand > #h3{
+          color: #717171;
+          font-weight: 800;
+        }
+        .collapse > .navbar-nav{
+          font-family: 'Nanum Gothic', sans-serif;
+          color: #717171;
+          font-weight: 800;
+          font-size: 20px;
+        }
+        .header2 > .navbar-nav{
+          font-family: 'Nanum Gothic', sans-serif;
+          color: #717171;
+          font-weight: 800;
+          font-size: 20px;
+        }
+        #no_sale{
+          text-decoration: none;
+          list-style: none;
+          text-align: center;
+          font-size: 50px;
+          font-family:'Nanum Gothic', sans-serif;
+          color:#717171;
+          position: relative;
+          top: 20%;
+          margin: 0 auto;
+        }
+        .card{
+          border: 2px dashed #707070;
+          background-color: #F1FBCF;
+          font-family:'Nanum Gothic', sans-serif;
+        }
+        .card-body{
+          background-color: white;
+        }
+        .card-body > .card-title{
+          font-size: 30px;
+          font-weight: 800;
+        }
+      </style>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarTogglerDemo01">
+              <a class="navbar-brand" href="/">
+                <span id="h1", style="font-size:30px;">토끼지마</span>
+                <span id="h2">
+                  <img src="/image/carrot.png" width="35">
+                </span>
+                <span id="h3", style="font-size:30px;">켓</span>
+              </a>
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page"><%= username %></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link">내가 작성한 게시판 목록</a>
+                </li>
+              </ul>
+              <form class="header2 d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/users/<%= username %>">마이페이지</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">로그아웃</a>
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
+      </nav>
+      <main class="main mt-5 position-relative">
+        <div calss="container-fluid center">
+          <% if(posts == null || posts.length == 0) { %>
+            <a id="no_sale">현재 작성한 게시판 목록이 존재하지않습니다</a>
+          <% } %>
+          <% posts.forEach(function(post){ %>
+            <div class="card mb-4" style="max-width: 1280px;">
+              <div class="row g-0">
+                <div class="col-md-6">
+                  <% if(post.attachment) { %>
+                    <div class="attachment">
+                      <IMG width="500" hieght="200"SRC="/files/<%= post.attachment.serverFileName %>/<%=post.attachment.originalFileName %> "></IMG>
+                    </div>
+                  <% } %>
+                  <!--<img src="/image/carrot.png" alt="...">-->
+                </div>
+                <div class="col-md-6">
+                  <div class="card-body m-3">
+                    <h5 class="card-title"><%= post.title %></h5>
+                    <p class="card-text"><%= post.contents %></p>
+                    <div class ="d-flex justify-content-end ms-3">
+                      <form action="/posts/status/<%= post._id %>?_method=put" method="post">
+                        <input class="btn btn-outline-primary" type="submit" name="status" value="예약 중"></input>
+                        <input class="btn btn-outline-primary" type="submit" name="status" value="예약 취소"></input>
+                      </form>
+                      <form action="/sale/<%= username %>/<%= post._id %>" method="post">
+                        <input class="btn btn-outline-primary" type="submit" value="거래 완료"></input>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </main>
+  </body>
+</html>

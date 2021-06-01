@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <style>
+      body {
+           background-color: #FFDEB8;
+       }
+
+       #before_bt {
+         position: absolute;
+         top: 300px;
+         left: 620px;
+       }
+
+        #next_bt {
+          position: absolute;
+          top: 300px;
+          left: 720px;
+        }
+
+    </style>
+  </head>
+                      <script>
+
+                          window.onload =function getQueryStringObject() { // get밭은거 변환. ㅎㅎㅎ  윈도우열리면, (body)내용 다 보고나서
+                          var a = window.location.search.substr(1).split('&');
+                          if (a == "") return {};
+                          var b = {};
+                          for (var i = 0; i < a.length; ++i) {
+                              var p = a[i].split('=', 2);
+                              if (p.length == 1)
+                                  b[p[0]] = "";
+                              else
+                                  b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                          
+                                }
+                                
+                              //b.toreceiver
+                                //return b.toreceiver;
+                                document.getElementById('goreceiver').value = b.toreceiver;
+                        }
+                        
+                        // document.getElementById('goreceiver').value = getQueryStringObject();
+                        // console.log( getQueryStringObject());
+                          </script>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div id="container" class="container mb-3">
+
+      <form action="/reviews<%= getPostQueryString() %>" method="post" >
+        <div class="form-group">
+          <label for="body" style="text-align: left; font: HYGothic-Extra; font-weight: bold; color: #787878; font-size: 30px;" class="contentBoxTop mb-3">거래후기</label>
+            <input type="text" id="body" name="contents" rows="5" class="form-control <%= (errors.contents)?'is-invalid':'' %>" value="<%= review.contents %>"></input>
+                        <div id="body_cnt">(0 / 50)</div>
+                      <% if(errors.contents){ %>
+                        <span class="invalid-feedback"><%= errors.contents.message %></span>
+                      <% } %>
+                     
+                      <input type="hidden" id="goreceiver" name="receiver" rows="5" class="form-control" value="hahahaha"></input>
+           
+                <!-- ㅎㅎㅎㅎㅎ -->
+        </div>
+
+        <% if(errors.unhandled){ %>
+          <div class="invalid-feedback d-block">
+            <%= errors.unhandled %>
+          </div>
+        <% } %>
+
+        <div>
+          <a id="before_bt" class="btn btn-primary" href="/reviews<%= getPostQueryString() %>" style="color: #000000; background: #F6C488; border: 3px solid #787878;">이전</a>
+          <button id="next_bt" type="submit" class="btn btn-primary" style="color: #000000; background: #F6C488; border: 3px solid #787878;">작성</button>
+        </div>
+
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
+      $(document).ready(function() {
+          $('#body').on('keyup', function() {
+              $('#body_cnt').html("("+$(this).val().length+" / 50)");
+
+              if($(this).val().length > 50) {
+                  $(this).val($(this).val().substring(0, 100));
+                  $('#body_cnt').html("(50 / 50)");
+              }
+          });
+      });
+    </script>
+  </body>
+</html>
