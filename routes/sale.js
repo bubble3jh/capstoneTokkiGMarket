@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // 필요한 DataBase -> History, User, File (사진)
-var History = require("../models/history");
+var History = require("../models/History");
 var User = require("../models/User");
 var Post = require("../models/Post");
 var util = require("../util");
