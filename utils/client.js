@@ -1,6 +1,6 @@
 var Web3 = require ('web3')
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545")); 
-var address = ENV['BLOCK_ADD'];
+var address = process.env.BLOCK_ADD;
 var contract = new web3.eth.Contract([
 	{
 		"constant": true,
@@ -393,7 +393,7 @@ var contract = new web3.eth.Contract([
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	}
-],ADDRESS_ADD,{from : address});
+],process.env.ADDRESS_ADD,{from : address});
 
 var smart_function = {};
 
