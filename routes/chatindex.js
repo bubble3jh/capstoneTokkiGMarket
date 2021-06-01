@@ -18,8 +18,7 @@ var boolarray = true;
 // Connect to mongo chat server
 //mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
 //mongoose.connect(process.env.MONGO_DB, function(err, db){
-    mongoose.connect("mongodb+srv://jinho:456798ab@cluster0.twnvx.mongodb.net/TokkiGmarket?retryWrites=true&w=majority", function(err, db){
-       if(boolarray){
+    mongoose.connect(process.env.MONGO_DB, function(err, db){   if(boolarray){
             idname = db.collection('users');
 
             
