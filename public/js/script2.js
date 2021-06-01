@@ -3,7 +3,7 @@ var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 
 
-var address = "0xe65DeCBEe3C1340Bfd4B1DbCF2E3247580ebD662"
+var address = BLOCK_ADD;
 var contract = new web3.eth.Contract([
 	{
 		"constant": true,
@@ -396,7 +396,7 @@ var contract = new web3.eth.Contract([
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	}
-],'0xE15d0Bef487d5B80E704884A0FD205F05b7F6d46',{from : address});
+],ADDRESS_ADD,{from : address});
 
 var smart_function = {};
 

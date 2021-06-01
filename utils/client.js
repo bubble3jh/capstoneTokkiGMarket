@@ -1,6 +1,6 @@
 var Web3 = require ('web3')
 var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545")); 
-var address = "0xe65DeCBEe3C1340Bfd4B1DbCF2E3247580ebD662"
+var address = BLOCK_ADD;
 var contract = new web3.eth.Contract([
 	{
 		"constant": true,
