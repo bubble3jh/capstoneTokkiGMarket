@@ -3,7 +3,7 @@
   <head>
     <%- include('../partials/head') %>
     <style>
-   
+
       body {
            background-color: #FFDEB8;
        }
@@ -13,7 +13,7 @@
          border: 2px solid #C2C2C2;
          opacity: 1;
          width: 400px;
-         height: 595px;
+         height: 675px;
        }
 
        #sbox {
@@ -23,7 +23,7 @@
          opacity: 1;
          width: 400px;
          height: 20px;
-         top: -400px;
+         top: -470px;
          left: -17px;
        }
 
@@ -45,21 +45,27 @@
         left: -15.5px;
       }
 
-      #review_bt {
+      #chat_bt {
         position: relative;
         top: 90px;
         left: -15.5px;
       }
 
-      #chat_bt {
+      #review_bt {
         position: relative;
         top: 100px;
         left: -15.5px;
       }
 
-      #report_bt {
+      #writerv_bt {
         position: relative;
         top: 110px;
+        left: -15.5px;
+      }
+
+      #report_bt {
+        position: relative;
+        top: 120px;
         left: -15.5px;
       }
 
@@ -106,6 +112,14 @@
           </a>
         <% } %>
       </div>
+      <div id="chat_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/chatindex" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            채팅목록<br>
+            진행 중인 채팅 목록을 확인하세요.
+          </a>
+        <% } %>
+      </div>
       <div id="review_bt">
         <% if(isAuthenticated && currentUser.username == user.username){ %>
           <a class="btn btn-primary" href="/sale/<%= user.username %>/myreview" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
@@ -114,11 +128,11 @@
           </a>
         <% } %>
       </div>
-      <div id="chat_bt">
+      <div id="writerv_bt">
         <% if(isAuthenticated && currentUser.username == user.username){ %>
-          <a class="btn btn-primary" href="/chatindex" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
-            채팅목록<br>
-            진행 중인 채팅 목록을 확인하세요.
+          <a class="btn btn-primary" href="/reviews/reviewindex" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            거래후기 작성<br>
+            거래후기를 작성하세요.
           </a>
         <% } %>
       </div>

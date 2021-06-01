@@ -20,7 +20,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-
+var MONGO_DB="mongodb+srv://jinho:456798ab@cluster0.twnvx.mongodb.net/TokkiGmarket?retryWrites=true&w=majority";
 mongoose.connect(MONGO_DB);
 
 var db = mongoose.connection;

@@ -58,9 +58,15 @@
           border: 2px dashed #707070;
           background-color: #F1FBCF;
           font-family:'Nanum Gothic', sans-serif;
+          margin-left: calc((100%-1280px)/7.5);
         }
         .card-body{
           background-color: white;
+          border: 2px solid #999;
+          height: 325px;
+        }
+        .card-text{
+          height: 200px
         }
         .card-body > .card-title{
           font-size: 30px;
@@ -113,17 +119,17 @@
               <div class="row g-0">
                 <div class="col-md-6">
                   <% if(post.attachment) { %>
-                    <div class="attachment">
+                    <div class="attachment p-3">
                       <IMG width="500" hieght="200"SRC="/files/<%= post.attachment.serverFileName %>/<%=post.attachment.originalFileName %> "></IMG>
                     </div>
                   <% } %>
                   <!--<img src="/image/carrot.png" alt="...">-->
                 </div>
                 <div class="col-md-6">
-                  <div class="card-body m-3">
+                  <div class="card-body m-3"style="height: calc();">
                     <h5 class="card-title"><%= post.title %></h5>
-                    <p class="card-text"><%= post.contents %></p>
-                    <div class ="d-flex justify-content-end ms-3">
+                    <p class="card-text mt-3"><%= post.contents %></p>
+                    <div class ="d-flex justify-content-md-end ms-3">
                       <form action="/posts/status/<%= post._id %>?_method=put" method="post">
                         <input class="btn btn-outline-primary" type="submit" name="status" value="예약 중"></input>
                         <input class="btn btn-outline-primary" type="submit" name="status" value="예약 취소"></input>
