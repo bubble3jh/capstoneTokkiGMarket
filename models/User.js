@@ -55,7 +55,7 @@ var userSchema = mongoose.Schema({
   blockhash: {
     type:String,
     /* 이부분 나중에 주석 해제 */
-    required:[true],
+    // required:[true],
   }, //블록체인 주소
   salt: {
     type:String
