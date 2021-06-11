@@ -195,11 +195,11 @@
                           </tr>
                           <tr>
                             <th>판매자ID</th>
-                            <a href="/reviews/<%= post.author.username %>/myreview">
+                            
                             <td>
-                              <%= post.author ? post.author.username : "" %>
+                              <a href="/reviews/<%= post.author.username %>/myreview"><%= post.author ? post.author.username : "" %></a>
                             </td>
-                            </a>
+                            
                           </tr>
                           <tr>
                             <th>상품상세</th>
