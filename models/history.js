@@ -20,8 +20,8 @@ var historySchema = mongoose.Schema({
     CreatedAt:{
         type: Date
     }, // 판매 날짜
-    attachment: { 
-        type: mongoose.Schema.Types.ObjectId, ref: "file" }
+    url1:{type:String},
+    url2:{type:String},
 
 });
 
