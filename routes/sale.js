@@ -48,21 +48,24 @@ router.get("/:username/myreview", util.isLoggedin, async function (req, res) {
 /* create -> 거래 내역을 추가한다. posts에서 해당 게시물 삭제 */
 
 router.post("/:username/:post_id", util.isLoggedin, async function (req, res) {
+  
   var post = await Post.findOne({ _id: req.params.post_id }).populate({
     path: "attachment",
   });
-  console.log("find post_id:" + post.attachment._id);
+  //console.log("find post_id:" + post.attachment._id);
 
   // post와 relation된 file 찾기
-  var file = await File.find({ _id: post.attachment._id });
-  console.log("find file" + "\n" + file._id);
+  //var file = await File.find({ _id: post.attachment._id });
+  //console.log("find file" + "\n" + file._id);
 
   req.body.author = req.params.username;
   req.body.title = post.title;
   req.body.contents = post.contents;
   req.body.category = post.category;
   req.body.CreatedAt = Date.now();
-  req.body.attachment = post.attachment;
+  //req.body.attachment = post.attachment;
+  req.body.url1 = post.url1;
+  req.body.url2 = post.url2;
 
   console.log(req.body);
 
