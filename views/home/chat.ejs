@@ -7,11 +7,48 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <title>chatpage</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <style>
-    body {
-         background-color: #FFDEB8;
-     }
+    body{
+      text-decoration: none;
+      list-style: none;
+      background-color:#FFDEB8;
+    }
+    .navbar{
+      background-color:#FFDEB8;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+    .navbar-brand > #h1{
+      color: #717171;
+      font-weight: 800;
+    }
+    .navbar-brand > #h1{
+      top:0px;
+    }
+    .navbar-brand > #h3{
+      color: #717171;
+      font-weight: 800;
+    }
+    .collapse > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .header2 > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .center{
+      border: 2px dashed #707070;
+      background-color: #F1FBCF;
+    }
 
      #main_header > #image_rabbit {
        position: absolute;
@@ -57,7 +94,7 @@
        left: 832px;
        top: 457px;
      }
-     
+
 
      select {
          font-family: 'Nanum Gothic Coding', monospace;
@@ -72,10 +109,10 @@
          position: absolute;
          left: 350px;
          top: 450px;
-        
+
      }
      .sent{
-        flex-direction: row-reverse;        
+        flex-direction: row-reverse;
     }
 
     .sent .message{
@@ -85,13 +122,13 @@
         background: #fff;
     }
     .chat-message-sent {
-        
+
         color:white;
         font-size: 20px;
         text-align: left;
         border: 1px solid #707070;
         background-color: #1673FF;
-        
+
         border-radius: 40px 30px 30px 0px;
         opacity: 1;
         box-sizing: content-box;
@@ -100,7 +137,8 @@
         float: right;
         padding-left:3%;
         margin: 5px;
-        font-family: "Noto Sans CJK KR", "나눔고딕코딩";
+        font-family: "Noto Sans CJK KR", "Nanum Gothic Coding";
+
     }
     .chat-message-received {
         color:black;
@@ -115,7 +153,7 @@
         overflow: hidden;
         float: left;
         padding-left:3%;
-        font-family: "Noto Sans CJK KR", "나눔고딕코딩";
+        font-family: "Noto Sans CJK KR", "Nanum Gothic Coding";
         margin: 5px;
 
     }
@@ -124,33 +162,33 @@
  </head>
  <body>
    <header id="main_header">
-    <%- include('../partials/sim_nav') %>
+    <%- include('../partials/sim2_nav') %>
 
-       
+
     </header>
-      
 
-      
+
+
             <div class=""
             style="
-            width: 50%; 
+            width: 50%;
             height: 100vh;
             margin: 0 auto; /* Added */
             float: none; /* Added */
             margin-bottom: 10px; /* Added */">
-              
+
                 <div id="status"></div>
                 <div id="chat" >
                     <% if(isAuthenticated){ %>
-                        <input type="text" id="usernicknamefornotuse" class="form-control" style="border: 1px solid #707070; background: #FFFFFF; font-size: 30px; color:black; font-family: 'Segoe UI';font-weight: bold" 
+                        <input type="text" id="usernicknamefornotuse" class="form-control" style="border: 1px solid #707070; background: #FFFFFF; font-size: 30px; color:black; font-family: 'Segoe UI';font-weight: bold"
                          value = "상대방 닉네임 : <%=tochatuser%>" readonly>
                     <% } %>
 
                     <% if(isAuthenticated){ %>
-                            <input type="hidden" id="username"  
+                            <input type="hidden" id="username"
                              value = "<%=currentUser.username%>" readonly>
                     <% } %>
-                   
+
 
                     <div class="card" >
                         <!-- <p>chatroom: <%= chatroom %></p> -->
@@ -164,8 +202,8 @@
                         ">
                         </div>
                     </div>
-                    
-                    
+
+
                     <!-- <textarea id="textarea" class="form-control" placeholder="메세지를 입력하세요"></textarea> -->
                     <div class="input-group" style="border: 3px solid #707070; background: #D1CACA;">
                         <input type="text" id = "textarea" class="form-control" style="background: #D1CACA; font-size: 30px;"placeholder="메세지를 입력하세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -173,27 +211,27 @@
                           <button class="btn btn-outline-secondary" type="button" id = sendbtn><img src="/image/chat_send.png" width="75"></button>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-        
-    
+
+
     <ul id="messages" type="none">
         <li id="usercount"></li>
     </ul>
 
         <!-- <button onclick="getRooms()">방 목록 가져오기</button>
-    
+
         <p id="rooms"></p> -->
-<!-- 
-        <button id="button1" onclick="joinRoom('채팅방 1');">채팅방 1</button>   
+<!--
+        <button id="button1" onclick="joinRoom('채팅방 1');">채팅방 1</button>
         <button id="button2" onclick="joinRoom('채팅방 2');">채팅방 2</button> -->
 
         <!-- <select id="roomoptions" onchange="joinRoom()">
             <option value="채팅방 1" selected>채팅방 1</option>
             <option value="채팅방 2">채팅방 2</option>
         </select> -->
-        
+
 
            <!-- <select id="roomoptions" onchange="joinRoom()">
                <option value="채팅방 1" selected>채팅방 1</option>
@@ -201,15 +239,15 @@
            </select> -->
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <!-- socekt.io 가져오는것, 필수 -->
     <!-- <script type="text/javascript" src="https://hidden-cove-14850.herokuapp.com/socket.io/socket.io.js"></script>    -->
     <!-- socket.io heroku -->
-  
+
 
 
     <script>
-            
+
             var element = function(id){
                 return document.getElementById(id);
             }
@@ -221,10 +259,10 @@
             var username = element('username');
             var clearBtn = element('clear');
             var sendBtn = element('sendbtn');
-            var roomname = "<%= chatroom %>";  // chatindex에서 받은 채팅방을 채팅방으로 설정해줌. 
+            var roomname = "<%= chatroom %>";  // chatindex에서 받은 채팅방을 채팅방으로 설정해줌.
             let currentUser = "<%= currentUser.username %>";
-               
-               
+
+
 
             // Set default status
             var statusDefault = status.textContent;
@@ -248,22 +286,22 @@
         // var socket = io.connect(url);
         //var socket = io.connect("mongodb+srv://master:1234@boomerangdb.6v75j.mongodb.net/chatdb");
         // var socket = io.connect(process.env.MONGO_DB);
-        var socket = io.connect(); 
+        var socket = io.connect();
 
         console.log(roomname +'zzzzzzz');
-        
+
         socket.emit('joinRoom', roomname, roomname); // room to join을 왜 이렇게 만들었지? 기억이안난다. 하지만 잘 되네. socketleave 함수 자체가 그런듯.
 
         // Check for connection
             if(socket !== undefined){
                 console.log('Connected to socket...');
 
-                                                                     
+
 
                 // Handle Output 메세지 받았을때 html에 내용을 표시해주는곳.    채팅내용 바꿀 수 있다. 쉽지.. if문써서 좌우, class . 으로 사용해서.
                 socket.on('output', function(data){
 
-                    
+
                     //console.log(data);
                     if(data.length){
                         for(var x = 0;x < data.length;x++){
@@ -271,7 +309,7 @@
                             var message = document.createElement('div');
                             // 여기에서 네임의[x] value가 currenUser와 같으면 왼쪽에 나오게하고
                             // 아니라면 오른쪽으로 나오게하기 ㅎㅎ
-                           
+
                             if(currentUser == data[x].name){
                             message.setAttribute('class', 'chat-message-sent');
                             message.textContent = data[x].name+": "+data[x].message;
@@ -294,7 +332,7 @@
                 });
 
                                     // 접속한 룸이 바뀌었을 때
-                                    socket.on('roomChanged', (joinedRoom) => { 
+                                    socket.on('roomChanged', (joinedRoom) => {
                                         console.log('방바뀜');
                                         roomname = joinedRoom;
                                         console.log('방바뀐곳에서 룸이름' + roomname);
@@ -339,7 +377,7 @@
                         event.preventDefault();
                     }
                 })
-                
+
                 // SendBtn
                 sendBtn.addEventListener('click', function(){
                     socket.emit('input', {
@@ -350,7 +388,7 @@
 
                         event.preventDefault();
                 });
-         
+
                 // Handle Chat Clear
                 // clearBtn.addEventListener('click', function(){
                 //     socket.emit('clear');
@@ -362,15 +400,15 @@
                 // });
             }
 
-        
+
 
     //     function getRooms() { // 방 목록 가져오기 버튼 클릭시
     //        // url을 지정해서 특정 네임스페이스를 들어갈 수 있다.
     //        console.log("hhh");
-           
+
 
     //        var debug = io.connect('/debug');
-           
+
 
     //        debug.emit('getRooms');  // getRooms 이벤트 호출
 
@@ -380,15 +418,15 @@
     //            var roomsText = document.getElementById('rooms');   // rooms element button 가져오기
     //              var testvar = "<%= chatroom %>";
     //            console.log(testvar);
-               
+
     //            roomsText.textContent = "";
-               
+
     //            for (var room in rooms) {
     //                roomsText.innerHTML += room + "<br>";
     //            }
     //        });
     //    }
-       
+
 
     //     function joinRoom(roomToJoin) { // 방 접속 버튼 클릭시
     //     //var roomOptions = document.getElementById("roomoptions");
@@ -398,7 +436,7 @@
     //        // 서버에 룸 전환 신호를 발신
     //        socket.emit('joinRoom', roomname, roomToJoin);
     //     //   socket.emit('joinRoom', roomname, roomToJoinVal);
-           
+
     //    }
 
 

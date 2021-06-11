@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var passport = require('../config/passport');
 var User = require('../models/User');
+
+var client = require("../utils/client");
+const { smart_function, web3 } = client;
+
 // chat
 router.get('/chat', function(req, res){
   res.render('home/chat');
@@ -47,38 +51,77 @@ router.get('/login', function (req,res) {
 });
 
 // Post Login
-router.post('/login',
-  function(req,res,next){
+router.post('/login',function(req,res,next){
     var errors = {};
     var isValid = true;
 
     if(!req.body.username){
       isValid = false;
-      errors.username = 'username is required!';
+      errors.username = '아이디를 입력하세요.';
     }
     if(!req.body.password){
       isValid = false;
-      errors.password = 'Password is required!';
+      errors.password = '비밀번호를 입력하세요.';
     }
 
-    if(isValid){
-      next();
-    }
-    else {
+    // 유효하지 않음
+    if(!isValid){
       req.flash('errors',errors);
-      res.redirect('/login');
+       return res.redirect('/login');
     }
+    // is valid
+    next();
+
   },
   passport.authenticate('local-login', {
     //successRedirect : '/posts',
     failureRedirect : '/login'
   }),
+
   function(req, res){
-    /*polic 계정이 들어왔을 때 */
+    var errors = {};
+    /* polic 계정이 들어왔을 때 */
     if(req.body.username == "bubble1jh"){
-      res.redirect('/police');
+      return res.redirect('/police');
     }
-    else res.redirect('/posts');
+    return res.redirect('/posts');
+    /*
+    // 일반 사용자의 경우 ip 주소 확인
+    else {
+
+      //res.redirect('/posts');
+
+      User.findOne({username: req.body.username}, async function(err,user){
+        if(err) return res.json(err);
+
+
+        console.log(user);
+
+        console.log(user.blockhash);
+
+        // contract 호출
+        var login = await smart_function.check_login(user.blockhash);
+
+        console.log('login');
+        console.log(login);
+        //  ip 인증
+        // 0일시 로그인 불가능
+        if(login == 0){
+          errors.ip_check = "ip 인증을 진행해주세요";
+          req.flash('errors', errors);
+          return res.redirect('users/addip');
+        }
+        // 1일시 로그인 가능
+        else if(login == 1){
+          res.redirect('/posts');
+          //next();
+        }
+        else{
+          return res.json(err);
+        }
+      })
+    }
+    */
   });
 
 // Logout
@@ -94,7 +137,7 @@ module.exports = router;
 function check_police(req, res, next){
 
   User.findOne({username:req.body.username}, function(err, user){
-    
+
     console.log(user.username);
     if(err) res.json(err);
     if(user.username == "bubble1jh"){

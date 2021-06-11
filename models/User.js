@@ -19,7 +19,7 @@ var userSchema = mongoose.Schema({
   // 이름은 블록체인에 저장
   name: {
     type:String,
-    required:[true,'이름을 입력하세요.'],
+    required:[true,'이름을 입력하세요.'], 
     match:[/^.{2,12}$/,'2-12자리의 문자를 입력하세요.'],
     trim:true
   }, //이름
@@ -55,7 +55,7 @@ var userSchema = mongoose.Schema({
   blockhash: {
     type:String,
     /* 이부분 나중에 주석 해제 */
-    required:[true]
+    //required:[true],
   }, //블록체인 주소
   salt: {
     type:String
@@ -139,7 +139,7 @@ userSchema.methods.authenticate = function (password) {
 
 userSchema.plugin(uniqueValidator, {
   type: 'mongoose-unique-validator',
-  message: 'Error, expected {PATH} to be unique.'
+  message: '이미 사용중인 이름입니다.'
 });
 
 // 스키마 등록

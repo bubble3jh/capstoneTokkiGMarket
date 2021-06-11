@@ -1,7 +1,30 @@
 var express  = require('express');
 var router = express.Router();
+var {format, callbackify} = require('util');
 var multer = require('multer');
-var upload = multer({ dest: 'uploadedFiles/' });
+var {Storage} = require('@google-cloud/storage');
+var storage = new Storage({
+  keyFilename: 'essential-hawk-314005-71a713c5e8d4.json'
+});
+// bucket 이름 
+var bucket = storage.bucket('tokki');
+var upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
+// upload 경로를 Google Cloud Storage로 설정 
+/*
+var upload = multer({
+  storage: multerGoogleStorage.storageEngine({
+    bucket: 'tokki',
+    projectId: 'My First Project',
+    keyFilename: 'essential-hawk-314005-71a713c5e8d4.json',
+  }),
+})
+var upload2 = multer();
+*/
 var Post = require('../models/Post');
 var User = require('../models/User');
 var Comment = require('../models/Comment');
@@ -71,7 +94,9 @@ router.get('/', async function(req, res){
           },
           createdAt: 1,
           commentCount: { $size: '$comments'},
-          status: 1
+          status: 1,
+          url1:1,
+          url2:1,
       } },
     ]).exec();
   }
@@ -82,15 +107,21 @@ router.get('/', async function(req, res){
     maxPage:maxPage,
     limit:limit,
     searchType:req.query.searchType,
-    searchText:req.query.searchText
+    searchText:req.query.searchText,
+    
   });
 });
 
-// Image - create
-router.post('/upload',upload.single('img'),(req,res) => {
-    res.json(req.file)
-    console.log(req.file)
+// Image - create => 이 함수 안씀
+/* upload는 req.files를 받음 => files 객체를 받음 */
+router.post('/upload',upload.array('imag'),(req,res) => {
+    
+    console.log("upload image");
+    console.log(req.file);
+    // file의 url을 반환
+    res.json({url: req.file.path});
 })
+
 
 // New - 새로운 게시판 글 작성 페이지로 넘어감
 router.get('/new', util.isLoggedin, function(req, res){
@@ -100,31 +131,174 @@ router.get('/new', util.isLoggedin, function(req, res){
 });
 
 // create - 새로운 게시판 글 생성 posts에 추가 
-router.post('/', util.isLoggedin, upload.single('attachment'), async function(req, res){
-  var attachment;
-  try{
-    attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined;
-  }
-  catch(err){
-    return res.json(err);
-  }
-  req.body.attachment = attachment;
-  req.body.author = req.user._id;
+router.post('/', util.isLoggedin, upload.array('attachment',2), async function(req, res, next){
+  
+  console.log("새로운 글~~~~");
+  console.log(req.files);
+  console.log(req.files.length);
+  
+  if(req.files.length == 0){
 
-  console.log(req.body.contents);
+    // 사진 파일 없이 post create
+    
+    console.log("There is no file");
+    req.body.author = req.user._id;
 
-  Post.create(req.body, function(err, post){
-    if(err){
-      req.flash('post', req.body);
-      req.flash('errors', util.parseError(err));
-      return res.redirect('/posts/new'+res.locals.getPostQueryString());
-    }
-    if(attachment){
-      attachment.postId = post._id;
-      attachment.save();
-    }
-    res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
-  });
+    Post.create(req.body, function(err, post){
+      if(err){
+        req.flash('post', req.body);
+        req.flash('errors', util.parseError(err));
+        return res.redirect('/posts/new'+res.locals.getPostQueryString());
+      }
+      /*
+      if(attachment){
+        attachment.postId = post._id;
+        attachment.save();
+      }*/
+      res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
+    });
+
+
+  }
+  else if(req.files.length == 2){
+
+    var blob = [];
+    blob.push(bucket.file(req.files[0].originalname));
+    blob.push(bucket.file(req.files[1].originalname));
+
+    console.log("req.files[0].originalname");
+    console.log(req.files[0].originalname);
+    console.log(req.files[1].originalname);
+
+    var blobStream = []; 
+
+    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴 
+    blobStream.push(blob[1].createWriteStream());
+
+    blobStream[0].on('error', err =>{
+      next(err);
+    })
+
+    blobStream[0].on('finish', () => {
+      
+        console.log("url 가져오기");
+
+        // 해당 파일의 Url가져오기
+        const publicUrl = format(
+          `https://storage.googleapis.com/${bucket.name}/${blob[0].name}`
+        )
+
+        console.log(publicUrl);
+        /*
+        var publicUrl = format(
+          'https://storage.googleapis.com/${bucket.name}/${blob.name}'
+        );*/
+
+        req.body.author = req.user._id;
+        req.body.url1 = publicUrl;
+
+        console.log(req.body);
+    })
+     
+    // url2
+
+    blobStream[1].on('error', err =>{
+      next(err);
+    })
+
+    blobStream[1].on('finish', () => {
+      
+      console.log("url 가져오기");
+      
+      // 해당 파일의 Url가져오기
+      const publicUrl = format(
+        `https://storage.googleapis.com/${bucket.name}/${blob[1].name}`
+      )
+      
+      req.body.author = req.user._id;
+      console.log(publicUrl);
+      /*
+      var publicUrl = format(
+        'https://storage.googleapis.com/${bucket.name}/${blob.name}'
+      );*/
+      req.body.url2 = publicUrl;
+      console.log(req.body);
+
+      Post.create(req.body, function(err, post){
+        if(err){
+          console.log(err);
+          req.flash('post', req.body);
+          req.flash('errors', util.parseError(err));
+          return res.redirect('/posts/new'+res.locals.getPostQueryString());
+        }
+        
+        else res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
+      });
+
+    });
+
+    // blobStream 끝
+    blobStream[1].end(req.files[1].buffer);
+    // blobStream 끝
+    blobStream[0].end(req.files[0].buffer);
+
+    console.log("create")
+    console.log(req.files.length);
+  
+  }
+  else if(req.files.length == 1){
+
+    var blob = [];
+    blob.push(bucket.file(req.files[0].originalname));
+
+    console.log("req.files[0].originalname");
+    console.log(req.files[0].originalname);
+
+    var blobStream = []; 
+
+    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴 
+
+    blobStream[0].on('error', err =>{
+      next(err);
+    })
+
+    blobStream[0].on('finish', () => {
+      
+        console.log("url 가져오기");
+
+        // 해당 파일의 Url가져오기
+        const publicUrl = format(
+          `https://storage.googleapis.com/${bucket.name}/${blob[0].name}`
+        )
+
+        console.log(publicUrl);
+        /*
+        var publicUrl = format(
+          'https://storage.googleapis.com/${bucket.name}/${blob.name}'
+        );*/
+
+        req.body.author = req.user._id;
+        req.body.url1 = publicUrl;
+
+        Post.create(req.body, function(err, post){
+          if(err){
+            console.log(err);
+            req.flash('post', req.body);
+            req.flash('errors', util.parseError(err));
+            return res.redirect('/posts/new'+res.locals.getPostQueryString());
+          }
+          
+          else res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
+        });
+
+        console.log(req.body);
+    })
+
+    // blobStream 끝
+    blobStream[0].end(req.files[0].buffer);
+
+  }
+
 });
 
 // show - 게시판 글의 상세 목록 보여주기
@@ -137,6 +311,7 @@ router.get('/:id', function(req, res){
       Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
     ])
     .then(([post, comments]) => {
+      console.log(post.url);
       post.views++;
       post.save();
       var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
@@ -165,9 +340,13 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
   }
 });
 
-// update -> 사용 안함
-router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAttachment'), async function(req, res){
+// update -> 게시물의 정보를 수정하는 페이지 
+router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachment'), async function(req, res, next){
+  
   var post = await Post.findOne({_id:req.params.id}).populate({path:'attachment',match:{isDeleted:false}});
+  
+  console.log(post);
+  /*
   if(post.attachment && (req.file || !req.body.attachment)){
     post.attachment.processDelete();
   }
@@ -176,20 +355,49 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAttachmen
   }
   catch(err){
     return res.json(err);
+  }*/
+  
+  // 요청된 파일이 없는 경우
+  if(! req.file){
+    req.body.url = null;
   }
-  req.body.updatedAt = Date.now();
-  Post.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
-    if(err){
-      req.flash('post', req.body);
-      req.flash('errors', util.parseError(err));
-      return res.redirect('/posts/'+req.params.id+'/edit'+res.locals.getPostQueryString());
-    }
-    res.redirect('/posts/'+req.params.id+res.locals.getPostQueryString());
-  });
+  else{
+
+    var blob = bucket.file(req.file.originalname);
+    var blobStream = blob.createWriteStream();
+
+    blobStream.on('err', function(err){
+      next(err);
+    })
+    
+    blobStream.on('finish', () => {
+
+      const publicUrl = format(
+        `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+      );
+       req.body.url = publicUrl;
+
+       req.body.updatedAt = Date.now();
+      console.log(req.body);
+      Post.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
+        if(err){
+          req.flash('post', req.body);
+          req.flash('errors', util.parseError(err));
+          return res.redirect('/posts/'+req.params.id+'/edit'+res.locals.getPostQueryString());
+        }
+        res.redirect('/posts/'+req.params.id+res.locals.getPostQueryString());
+      });
+    });
+
+  
+  }
+
+  // blobStream 끝
+  blobStream.end(req.file.buffer);
+
 });
 
 // update: post status 상태 바뀜
-
 router.put('/status/:id', util.isLoggedin, checkPermission, async function(req,res){
 
   // 이때 id는 post의 objectid

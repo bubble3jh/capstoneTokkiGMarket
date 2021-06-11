@@ -2,16 +2,47 @@
 <html>
   <head>
     <%- include('../partials/head') %>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <title>chatpage</title>
-
+    <meta charset = "UTF-8">
+    <title>Document</title>
+    <!-- font 설정 -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <style>
-    body {
-         background-color: #FFDEB8;
-     }
+      body{
+        text-decoration: none;
+        list-style: none;
+        background-color:#FFDEB8;
+      }
+      .navbar{
+        background-color:#FFDEB8;
+        font-family: 'Nanum Gothic', sans-serif;
+      }
+      .navbar-brand > #h1{
+        color: #717171;
+        font-weight: 800;
+      }
+      .navbar-brand > #h1{
+        top:0px;
+      }
+      .navbar-brand > #h3{
+        color: #717171;
+        font-weight: 800;
+      }
+      .collapse > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .header2 > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
 
      #main_header > #image_rabbit {
        position: absolute;
@@ -87,7 +118,7 @@
  </head>
  <body>
    <header id="main_header">
-    <%- include('../partials/sim_nav') %>
+    <%- include('../partials/sim2_nav') %>
 
 
     </header>
@@ -247,7 +278,7 @@
                             //reviews_receiver[1] = currentUser;
                             //reviews_receiver.sort();
                             // ㅎㅎ
-                            document.write('<form action="/reviews" id="rev_form" method="get"><input type="hidden" name="toreceiver" value="'+ finalroom[ridx] +'"></form>');
+                            document.write('<form action="/reviews/new" id="rev_form" method="get"><input type="hidden" name="toreceiver" value="'+ finalroom[ridx] +'"></form>');
                             document.getElementById("rev_form").submit();
                           });
                   });

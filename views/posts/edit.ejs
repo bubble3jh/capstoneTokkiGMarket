@@ -3,29 +3,63 @@
 
 <head>
   <%- include('../partials/head') %>
-</head>
-<style>
-  body {
+</head><style>
+  body{
+    text-decoration: none;
+    list-style: none;
+    padding: 50px;
+  background-color:#FFDEB8;
+  }
+  .navbar{
+    background-color:#FFDEB8;
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+  .navbar-brand > #h1{
+    color: #717171;
+    font-weight: 800;
+  }
+  .navbar-brand > #h1{
+    top:0px;
+  }
+  .navbar-brand > #h3{
+    color: #717171;
+    font-weight: 800;
+  }
+  .collapse > .navbar-nav{
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #717171;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .header2 > .navbar-nav{
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #717171;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  /* body {
+
+    font-family: 'Nanum Gothic', sans-serif;
     background-color: #FFDEB8;
     padding: 50px;
-  }
+  } */ 
 
   .post_show_title {
     background-color: #ffffff;
     position: relative;
-    padding: 50px 100px 100px 395px;
-    height: 600px;
+    padding: 50px 120px 120px 395px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #787878;
   }
 
-  .post_show_title .post_show_img {
-    position: absolute;
-    left: 100px;
-    top: 100px;
-  }
 
   .post_show_title .post_show_img>img {
-    height: 400px;
-    width: 400px;
+    height: 350px;
+    width: 350px;
+    position: relative;
+    bottom: 120px;
+    right: 380px;
     border: 1px solid #e8e8e8;
   }
 
@@ -40,12 +74,13 @@
 
   .post_show_title table th,
   .post_show_title table td {
-    padding: 20px 200px;
+    padding: 20px 20px;
     font-size: 18px;
     text-align: left;
   }
 
   .post_show_title table th {
+    min-width: 150px;
     font-size: 22px;
     color: #444;
     text-align: left;
@@ -76,10 +111,9 @@
     font-size: 16px;
     color: #fff;
     border-radius: 2px;
-    background: #f78736;
+    background: #F6C488;
   }
 </style>
-
 <body>
   <%- include('../partials/sim2_nav') %>
     <form action="/posts/<%= post._id %>?_method=put<%= getPostQueryString(true) %>" enctype="multipart/form-data"
@@ -132,27 +166,23 @@
 
         <div>
           <button style="
-            position:relative;
-            left:850px;
-            top:100px;
-            height:45px;
-            width: 120px;
-            display: inline-block;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 2px;
-            background: #f78736;"class="chatbtn" href="/posts<%= getPostQueryString() %>">이전</button>
+          position: relative;
+          width: 120px;
+          left:200px;
+          top:50px;
+          font-size: 16px;
+          color: #fff;
+          border-radius: 2px;
+          background: #F6C488; border: 3px solid #787878; color: #000000;"class="chatbtn" href="/posts<%= getPostQueryString() %>">이전</button>
           <button style="
-            position:relative;
-            left:850px;
-            top:100px;
-            height:45px;
-            width: 120px;
-            display: inline-block;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 2px;
-            background: #f78736;"type="submit" class="chatbtn">작성완료</button>
+          position: relative;
+          width: 120px;
+          left:200px;
+          top:50px;
+          font-size: 16px;
+          color: #fff;
+          border-radius: 2px;
+          background: #F6C488; border: 3px solid #787878; color: #000000;"type="submit" class="chatbtn">작성완료</button>
         </div>
 
       </div>

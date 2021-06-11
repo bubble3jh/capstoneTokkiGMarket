@@ -1,7 +1,6 @@
 {
   "name": "board",
   "version": "1.0.0",
-  "description": "이 저장소의 코드는\r [http://a-mean-blog.com/ko/blog/Node-JS-첫걸음/게시판-만들기](http://a-mean-blog.com/ko/blog/Node-JS-첫걸음/게시판-만들기)에서 작성되었습니다.\r <br>",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -14,6 +13,7 @@
     "node": "14.16.0"
   },
   "dependencies": {
+    "@google-cloud/storage": "^5.8.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "box-node-sdk": "^1.37.0",

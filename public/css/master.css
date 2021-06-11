@@ -43,7 +43,26 @@ body {
 .user-form {
   width: 400px;
 }
-<<<<<<< HEAD
+
+::-webkit-scrollbar {
+  width: 15px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 0 1% grey; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: grey; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #353535; 
+  }
+  
 
 .post-index-tool {
   max-width: 450px;
@@ -66,5 +85,3 @@ body {
 .comment-reply-enabled .comment-reply {
   display:inherit;
 }
-=======
->>>>>>> bb1c9edb819bfb003d0b85a5288916b4634ec5a1

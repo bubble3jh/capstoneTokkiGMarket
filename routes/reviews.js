@@ -19,6 +19,7 @@ router.get('/', async function(req, res){
   var searchQuery = await createSearchQuery(req.query);
   var reviews = [];
   var receiver = req.body.receiver;
+  //var authorstr = req.body.authorstr;
 
   if(searchQuery) {
     var count = await Review.countDocuments(searchQuery);
@@ -34,13 +35,12 @@ router.get('/', async function(req, res){
   res.render('reviews/index', {
     reviews:reviews,
     receiver:receiver,
+    //authorstr:authorstr,
     currentPage:page,
     maxPage:maxPage,
     limit:limit,
     searchType:req.query.searchType,
     searchText:req.query.searchText,
- 
-    
   });
 });
 // // review부분에 post기능을 이용해서 채팅목록에 있는 toreceiver의 내용을 보내줍니다 for use ejs ㅎㅎㅎ
@@ -48,7 +48,7 @@ router.get('/', async function(req, res){
 //   var toreceiver = req.body.toreceiver;
 //   console.log('이사람한데 이제 가는겁니다' + toreceiver);
 //   res.render('reviews/new', { toreceiver: toreceiver});
-  
+
 // });
 //router.post('/index', function(req, res) {
   //var receiver = req.body.receiver;
@@ -74,14 +74,25 @@ router.get('/reviewindex', function(req, res){
   res.render('reviews/reviewindex');
 });
 
+router.get("/:username/myreview", util.isLoggedin, async function (req, res) {
+  var receiverid = req.params.username;
+  //var author = req.body.author;
 
-
-
+  Review.find({ receiver: receiverid })
+    .populate('author')
+    .exec(function (err, reviews) {
+      if (err) req.json(err);
+      res.render('reviews/myreview', {
+        //author: author,
+        reviews: reviews });
+    });
+});
 
 // create - 새로운 게시판 글 생성 posts에 추가 ㅎㅎ
-router.post('/', function(req, res){
+router.post('/reviewindex', function(req, res){
   req.body.author = req.user._id; // 2
   var receiver = req.body.receiver;
+  //var authorstr = req.body.authorstr;
 
   //res.redirect('reviews/new', { receiver: receiver });
   Review.create(req.body, function(err, review){
@@ -92,11 +103,11 @@ router.post('/', function(req, res){
     //}
     console.log(receiver);
     //res.redirect('/reviews'+res.locals.getPostQueryString(false, { page:1, searchText:'' }), {receiver:receiver});
-    res.redirect('/reviews?toreceiver=' + receiver);
+    res.redirect('/reviews/reviewindex?toreceiver=' + receiver);
     console.log(req.body);
   });
   //console.log(req.body);
-  
+
 });
 
 // show - 게시판 글의 상세 목록 보여주기
