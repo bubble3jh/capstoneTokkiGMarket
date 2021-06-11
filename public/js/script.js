@@ -54,7 +54,7 @@ $(function(){
     });
   }
 
-  if(params.searchText && params.searchText.length>=3){
+  if(params.searchText && params.searchText.length>=1){
     $('[data-search-highlight]').each(function(index,element){
       var $element = $(element);
       var searchHighlight = $element.data('search-highlight');
@@ -99,4 +99,3 @@ $(function(){
   });
   resetTitleEllipsisWidth();
 });
-

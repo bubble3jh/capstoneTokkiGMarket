@@ -124,7 +124,7 @@ module.exports = router;
 
 async function createSearchQuery(queries){
   var searchQuery = {};
-  if(queries.searchType && queries.searchText && queries.searchText.length >= 3){
+  if(queries.searchType && queries.searchText && queries.searchText.length >= 1){
     var searchTypes = queries.searchType.toLowerCase().split(',');
     var postQueries = [];
     if(searchTypes.indexOf('author!')>=0){

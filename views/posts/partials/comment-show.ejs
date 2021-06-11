@@ -7,7 +7,7 @@
 
 <div class="border-top" style="position:relative;">
   <% if(comment.isDeleted){ %>
-    <div class="text-muted p-2">(Deleted Commnet)</div>
+    <div class="text-muted p-2">(삭제된 댓글입니다.)</div>
   <% } else { %>
     <div class="row pt-1 pb-1">
       <% if(isAuthenticated && comment.author.id == currentUser.id){ %>

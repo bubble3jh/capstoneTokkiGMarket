@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/User");
 var util = require("../util");
-// contract 
+// contract
 var client = require("../utils/client");
 const { smart_function, web3 } = client;
 
@@ -19,7 +19,7 @@ router.get("/identity", function (req, res) {
   res.render("users/identity", { user: user, errors: errors });
 });
 
-// ip 주소 추가 page로 
+// ip 주소 추가 page로
 router.get("/addip", function (req, res) {
   var user = req.flash("user")[0] || {};
   var errors = req.flash("errors")[0] || {};
@@ -27,26 +27,23 @@ router.get("/addip", function (req, res) {
 });
 
 // ip 주소 추가
-router.post('/addip', async function(req, res){
-
+router.post("/addip", async function (req, res) {
   console.log(req.body);
-  num = req.body.residentnum1 +'-' +req.body.residentnum2;
+  num = req.body.residentnum1 + "-" + req.body.residentnum2;
   var check = await smart_function.is_exist(num);
 
   console.log(check);
 
-  // 신원 인증 x => 로그아웃 && 신원 확인이 안된다는 메세지 
-  if(check == 2){
-    return res.redirect('/logout');
+  // 신원 인증 x => 로그아웃 && 신원 확인이 안된다는 메세지
+  if (check == 2) {
+    return res.redirect("/logout");
   }
   // ip 추가 가능
-  else if(check == 3){
-
+  else if (check == 3) {
     console.log("ip 추가");
     await smart_function.add_ip(req.user.blockhash);
-    return res.redirect('/posts');
+    return res.redirect("/posts");
   }
-
 });
 
 // create
@@ -57,10 +54,9 @@ router.post("/", async function (req, res) {
   //우선 blockhash를 required true안함
 
   // blockhash의 type: Number
- // req.body.blockhash = await smart_function.get_account();
- // var index = req.body.blockhash ;
+  // req.body.blockhash = await smart_function.get_account();
+  // var index = req.body.blockhash ;
   //index = index.toString();
-  
 
   console.log(req.body);
 
@@ -74,7 +70,7 @@ router.post("/", async function (req, res) {
       return res.redirect("/users/new");
     }
     // 해당 user가 생성될 시, ip주소setting
-    if(user){
+    if (user) {
       // contract의 ip setting
       //smart_function.set_ip(index);
       console.log(user);

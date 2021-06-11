@@ -6,15 +6,15 @@ var {Storage} = require('@google-cloud/storage');
 var storage = new Storage({
   keyFilename: 'essential-hawk-314005-71a713c5e8d4.json'
 });
-// bucket 이름 
+// bucket 이름
 var bucket = storage.bucket('tokki');
-var upload = multer({ 
+var upload = multer({
   storage: multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024,
   },
 });
-// upload 경로를 Google Cloud Storage로 설정 
+// upload 경로를 Google Cloud Storage로 설정
 /*
 var upload = multer({
   storage: multerGoogleStorage.storageEngine({
@@ -43,7 +43,7 @@ router.get('/', async function(req, res){
   var skip = (page-1)*limit;
   var maxPage = 0;
   var searchQuery = await createSearchQuery(req.query); // find로만하면 exact한 value만 검색하기때문에 CreateSearchQuery로 조정해줌.
-  
+
   var posts = [];
 
   if(searchQuery) {
@@ -108,14 +108,14 @@ router.get('/', async function(req, res){
     limit:limit,
     searchType:req.query.searchType,
     searchText:req.query.searchText,
-    
+
   });
 });
 
 // Image - create => 이 함수 안씀
 /* upload는 req.files를 받음 => files 객체를 받음 */
 router.post('/upload',upload.array('imag'),(req,res) => {
-    
+
     console.log("upload image");
     console.log(req.file);
     // file의 url을 반환
@@ -130,17 +130,17 @@ router.get('/new', util.isLoggedin, function(req, res){
   res.render('posts/new', { post:post, errors:errors });
 });
 
-// create - 새로운 게시판 글 생성 posts에 추가 
+// create - 새로운 게시판 글 생성 posts에 추가
 router.post('/', util.isLoggedin, upload.array('attachment',2), async function(req, res, next){
-  
+
   console.log("새로운 글~~~~");
   console.log(req.files);
   console.log(req.files.length);
-  
+
   if(req.files.length == 0){
 
     // 사진 파일 없이 post create
-    
+
     console.log("There is no file");
     req.body.author = req.user._id;
 
@@ -170,9 +170,9 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
     console.log(req.files[0].originalname);
     console.log(req.files[1].originalname);
 
-    var blobStream = []; 
+    var blobStream = [];
 
-    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴 
+    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴
     blobStream.push(blob[1].createWriteStream());
 
     blobStream[0].on('error', err =>{
@@ -180,7 +180,7 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
     })
 
     blobStream[0].on('finish', () => {
-      
+
         console.log("url 가져오기");
 
         // 해당 파일의 Url가져오기
@@ -199,7 +199,7 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
 
         console.log(req.body);
     })
-     
+
     // url2
 
     blobStream[1].on('error', err =>{
@@ -207,14 +207,14 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
     })
 
     blobStream[1].on('finish', () => {
-      
+
       console.log("url 가져오기");
-      
+
       // 해당 파일의 Url가져오기
       const publicUrl = format(
         `https://storage.googleapis.com/${bucket.name}/${blob[1].name}`
       )
-      
+
       req.body.author = req.user._id;
       console.log(publicUrl);
       /*
@@ -231,7 +231,7 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
           req.flash('errors', util.parseError(err));
           return res.redirect('/posts/new'+res.locals.getPostQueryString());
         }
-        
+
         else res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
       });
 
@@ -244,7 +244,7 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
 
     console.log("create")
     console.log(req.files.length);
-  
+
   }
   else if(req.files.length == 1){
 
@@ -254,16 +254,16 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
     console.log("req.files[0].originalname");
     console.log(req.files[0].originalname);
 
-    var blobStream = []; 
+    var blobStream = [];
 
-    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴 
+    blobStream.push(blob[0].createWriteStream()); // 해당 파일을 stream으로 가져옴
 
     blobStream[0].on('error', err =>{
       next(err);
     })
 
     blobStream[0].on('finish', () => {
-      
+
         console.log("url 가져오기");
 
         // 해당 파일의 Url가져오기
@@ -287,7 +287,7 @@ router.post('/', util.isLoggedin, upload.array('attachment',2), async function(r
             req.flash('errors', util.parseError(err));
             return res.redirect('/posts/new'+res.locals.getPostQueryString());
           }
-          
+
           else res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
         });
 
@@ -340,11 +340,11 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
   }
 });
 
-// update -> 게시물의 정보를 수정하는 페이지 
+// update -> 게시물의 정보를 수정하는 페이지
 router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachment'), async function(req, res, next){
-  
+
   var post = await Post.findOne({_id:req.params.id}).populate({path:'attachment',match:{isDeleted:false}});
-  
+
   console.log(post);
   /*
   if(post.attachment && (req.file || !req.body.attachment)){
@@ -356,7 +356,7 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachme
   catch(err){
     return res.json(err);
   }*/
-  
+
   // 요청된 파일이 없는 경우
   if(! req.file){
     req.body.url = null;
@@ -369,7 +369,7 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachme
     blobStream.on('err', function(err){
       next(err);
     })
-    
+
     blobStream.on('finish', () => {
 
       const publicUrl = format(
@@ -389,7 +389,7 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachme
       });
     });
 
-  
+
   }
 
   // blobStream 끝
@@ -401,7 +401,7 @@ router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAsttachme
 router.put('/status/:id', util.isLoggedin, checkPermission, async function(req,res){
 
   // 이때 id는 post의 objectid
-  
+
   if(req.body.status == "예약 중"){
     console.log("예약 중으로 바뀜");
 
@@ -411,7 +411,7 @@ router.put('/status/:id', util.isLoggedin, checkPermission, async function(req,r
       res.redirect('/sale/'+ req.user.username + '/mytrade');
     });
   }
-  
+
   if(req.body.status == "예약 취소"){
     console.log("예약 취소으로 바뀜");
 
@@ -449,7 +449,7 @@ async function createSearchQuery(queries){
 
 
   var searchQuery = {};
-  if(queries.searchType && queries.searchText && queries.searchText.length >= 3){
+  if(queries.searchType && queries.searchText && queries.searchText.length >= 1){
     var searchTypes = queries.searchType.toLowerCase().split(',');
     var postQueries = [];
     if(searchTypes.indexOf('title')>=0){
@@ -473,6 +473,6 @@ async function createSearchQuery(queries){
     if(postQueries.length>0) searchQuery = {$or:postQueries};
     else searchQuery = null;
   }
- 
+
   return searchQuery;
 }
