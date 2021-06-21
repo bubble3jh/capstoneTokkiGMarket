@@ -1,3 +1,6 @@
+# 국문 : 블록체인 기술을 활용한 중고거래 사기 방지 시스템
+## 영문 : fraud prevention platform using blockchain technology
+
 서론
 ----
 
