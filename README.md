@@ -120,10 +120,6 @@
 
 #### 구성원 및 추진체계
 
--   추진 계통도
-
-![500픽셀|가운데](./images/2-2-1.png)
-
 -   김민혜: 팀장, 블록체인 구현, 웹페이지 구성 디자인
 
 `  - 웹페이지 프로토타입 제작 (Adobe XD 사용) `\
@@ -172,7 +168,7 @@
 `◇ 사용자는 판매 내역, 구매 내역, 거래 후기와 채팅방을 마이페이지에서 확인할 수 있다. `\
 `◇ 사용자는 거래 후 거래 후기 작성 페이지로 가서 중고거래 후기를 작성할 수 있다.`
 
-[500픽셀|가운데](파일:00.jpg "wikilink")
+![500픽셀|가운데](./images/500px-00.jpg)
 
 #### 회원가입
 
@@ -294,35 +290,35 @@
 
 -   전체 시스템
 
-[500픽셀|](파일:01.jpg "wikilink")
+![500픽셀|](./images/500px-01.jpg)
 
 -   회원가입
 
-[500픽셀|](파일:02.jpg "wikilink")
+![500픽셀|](./images/500px-02.jpg)
 
 -   로그인
 
-[500픽셀|](파일:03.jpg "wikilink")
+![500픽셀|](./images/500px-03.jpg)
 
 -   구매
 
-[500픽셀|](파일:04.jpg "wikilink")
+![500픽셀|](./images/500px-04.jpg)
 
 -   판매/물건 업로드
 
-[500픽셀|](파일:05.jpg "wikilink")
+![500픽셀|](./images/500px-05.jpg)
 
 -   상대방 정보 확인
 
-[500픽셀|](파일:06.jpg "wikilink")
+![500픽셀|](./images/500px-06.jpg)
 
 -   채팅하기
 
-[500픽셀|](파일:07.jpg "wikilink")
+![500픽셀|](./images/500px-07.jpg)
 
 -   신고하기
 
-[500픽셀|](파일:08.jpg "wikilink")
+![500픽셀|](./images/500px-08.jpg)
 
 ### UI 설계
 
@@ -332,80 +328,80 @@
 
 -   중고 물품을 구매하는 사용자의 UI Flow
 
-[가운데](파일:B1.png "wikilink")
+![500픽셀|](./images/B1.png)
 
 -   중고 물품을 판매하는 사용자의 UI Flow
 
-[가운데](파일:B2.png "wikilink")
+![500픽셀|](./images/B2.png)
 
 -   마이페이지 UI Flow
 
-[가운데](파일:B3.png "wikilink")
+![500픽셀|](./images/B3.png)
 
 -   신고하기 UI Flow
 
-[가운데](파일:B4.png "wikilink")
+![500픽셀|](./images/B4.png)
 
 1.  화면 목록
 
-[파일:noname05.jpg](파일:noname05.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname05.jpg)
 
 1.  화면 흐름도
 
 -   중고 물품을 구매하는 사용자의 화면 흐름도
 
-[파일:noname06.jpg](파일:noname06.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname06.jpg)
 
 -   중고 물품을 판매하는 사용자의 화면 흐름도
 
-[파일:noname07.jpg](파일:noname07.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname07.jpg)
 
 -   마이페이지 화면 흐름도
 
-[파일:noname08.jpg](파일:noname08.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname08.jpg)
 
 -   신고하기 화면 흐름도
 
-[파일:noname009.jpg](파일:noname009.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname09.jpg)
 
 1.  화면 정의
 
 -   홈 화면
 
-[파일:noname10.jpg](파일:noname10.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname10.jpg)
 
 -   로그인 후 홈 화면
 
-[파일:noname11.jpg](파일:noname11.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname11.jpg)
 
 -   회원가입
 -   신원 확인
 
-[파일:noname012.jpg](파일:noname012.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname12.jpg)
 
 -   정보 입력
 
-[파일:noname13.jpg](파일:noname13.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname13.jpg)
 
 -   가입완료
 
-[파일:noname14.jpg](파일:noname14.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname14.jpg)
 
 -   판매 페이지
 
-[파일:noname15.jpg](파일:noname15.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname15.jpg)
 
 -   판매 물품 설명 페이지
 
-[파일:noname16.jpg](파일:noname16.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname16.jpg)
 
 -   채팅방
 
-[파일:noname17.jpg](파일:noname17.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname17.jpg)
 
 -   마이페이지
 
-[파일:noname18.jpg](파일:noname18.jpg "wikilink")
+![파일:noname05.jpg](./images/Noname18.jpg)
 
 -   구매 내역 – 구매 중
 
